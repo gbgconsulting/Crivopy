@@ -1,0 +1,38 @@
+{% extends 'base_authenticated.html' %}
+
+{% block inner_content %}
+<div class='space-y-10 animate-fade-in'>
+    
+    <div class='flex flex-col gap-2'>
+        <nav class='flex items-center gap-2 text-sm text-gray-500'>
+            <a href="{% url 'hub:job-list' %}" class='hover:text-indigo-400 transition-colors'>Vagas</a>
+            <i data-lucide='chevron-right' class='w-4 h-4'></i>
+            <span class='text-gray-300'>Análise de Inteligência</span>
+        </nav>
+        <div class='flex flex-col md:flex-row md:items-center justify-between gap-4'>
+            <h1 class='text-3xl font-bold text-white tracking-tight'>
+                Dashboard de Análise: <span class='bg-gradient-to-r from-indigo-400 to-violet-500 bg-clip-text text-transparent'>{{ job.title }}</span>
+            </h1>
+        </div>
+    </div>
+
+    <div class='flex items-center gap-8 border-b border-white/5 mb-8'>
+        <a href="{% url 'brain:job-analysis' job.pk %}" 
+           class='pb-4 text-sm font-bold border-b-2 border-indigo-500 text-white transition-all'>
+            Análise de IA
+        </a>
+        <a href="{% url 'document-list' job.pk %}" 
+           class='pb-4 text-sm font-medium text-gray-500 hover:text-gray-300 transition-all'>
+            Documentos e Candidatos
+        </a>
+    </div>
+ <div class='flex justify-end'>
+        <a href="{% url 'brain:agent-chat' job.pk %}"
+           class='inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-800 border border-gray-700 text-gray-200 font-semibold text-sm hover:bg-gray-700 hover:border-indigo-500/50 transition-all duration-200'>
+            <i data-lucide='bot' class='w-4 h-4 text-indigo-400'></i>
+            Consultar Agente de RH
+        </a>
+    </div>
+
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+{% endblock %}

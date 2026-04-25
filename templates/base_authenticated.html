@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='min-h-screen bg-[#0a0a0c] text-gray-100 flex' x-data='{ sidebarOpen: false }'>
+    
+    <!-- Sidebar Partial -->
+    {% include 'partials/_sidebar.html' %}
+
+    <!-- Main Content Area -->
+    <div class='flex-1 flex flex-col min-w-0 overflow-hidden'>
+        
+        <!-- Top Mobile Header -->
+        <header class='md:hidden bg-[#111114]/80 backdrop-blur-md border-b border-white/5 p-4 flex justify-between items-center'>
+            <span class='text-xl font-bold bg-gradient-to-r from-indigo-400 to-violet-500 bg-clip-text text-transparent'>
+                Crivopy
+            </span>
+            <button @click='sidebarOpen = true' class='p-2 text-gray-400 hover:text-white transition-colors'>
+                <i data-lucide='menu' class='w-6 h-6'></i>
+            </button>
+        </header>
+
+        <!-- Page Content -->
+        <main class='flex-1 overflow-y-auto p-4 md:p-8 lg:p-12'>
+            {% if messages %}
+                <div class='max-w-4xl mx-auto mb-6'>
+                    {% for message in messages %}
+                        <div class='p-4 rounded-lg border {% if message.tags == "success" %}bg-emerald-500/10 border-emerald-500/20 text-emerald-400{% else %}bg-red-500/10 border-red-500/20 text-red-400{% endif %} flex items-center gap-3 animate-fade-in'>
+                            <i data-lucide='{% if message.tags == "success" %}check-circle{% else %}alert-circle{% endif %}' class='w-5 h-5'></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class='max-w-7xl mx-auto'>
+                {% block inner_content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    // Initialize icons
+    lucide.createIcons();
+</script>
+{% endblock %}

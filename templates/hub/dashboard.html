@@ -1,0 +1,112 @@
+{% extends 'base_authenticated.html' %}
+
+{% block inner_content %}
+<div class='space-y-10 animate-fade-in'>
+    
+    <!-- Cabeçalho da Página -->
+    <div class='flex flex-col md:flex-row md:items-center justify-between gap-4'>
+        <div>
+            <h1 class='text-3xl font-bold text-white tracking-tight'>
+                Dashboard <span class='text-indigo-500'>Recrutador</span>
+            </h1>
+            <p class='text-gray-400 mt-1'>Bem-vindo de volta! Aqui está um resumo da sua conta hoje.</p>
+        </div>
+        
+        <!-- Botão de Ação Rápida -->
+        <a href="{% url 'hub:job-create' %}" class='inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-indigo-500/20 transition-all duration-200 active:scale-95'>
+            <i data-lucide='plus' class='w-5 h-5'></i>
+            Nova Vaga
+        </a>
+    </div>
+
+    <!-- Grid de Métricas (Tarefa 2.2.5) -->
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+        
+        <!-- Card: Vagas Ativas -->
+        <div class='group relative p-6 bg-[#111114]/50 border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-indigo-500/30 hover:bg-[#16161a]'>
+            <div class='absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity'>
+                <i data-lucide='briefcase' class='w-24 h-24 text-indigo-500'></i>
+            </div>
+            <div class='relative flex flex-col gap-4'>
+                <div class='w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400'>
+                    <i data-lucide='briefcase' class='w-6 h-6'></i>
+                </div>
+                <div>
+                    <h3 class='text-sm font-medium text-gray-400 uppercase tracking-wider'>Vagas Ativas</h3>
+                    <p class='text-3xl font-bold text-white mt-1'>{{ active_jobs_count|default:"0" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Documentos Enviados -->
+        <div class='group relative p-6 bg-[#111114]/50 border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-violet-500/30 hover:bg-[#16161a]'>
+            <div class='absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity'>
+                <i data-lucide='file-text' class='w-24 h-24 text-violet-500'></i>
+            </div>
+            <div class='relative flex flex-col gap-4'>
+                <div class='w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400'>
+                    <i data-lucide='file-text' class='w-6 h-6'></i>
+                </div>
+                <div>
+                    <h3 class='text-sm font-medium text-gray-400 uppercase tracking-wider'>Documentos</h3>
+                    <p class='text-3xl font-bold text-white mt-1'>{{ total_documents_count|default:"0" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Pendentes -->
+        <div class='group relative p-6 bg-[#111114]/50 border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-amber-500/30 hover:bg-[#16161a]'>
+            <div class='absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity'>
+                <i data-lucide='clock' class='w-24 h-24 text-amber-500'></i>
+            </div>
+            <div class='relative flex flex-col gap-4'>
+                <div class='w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400'>
+                    <i data-lucide='clock' class='w-6 h-6'></i>
+                </div>
+                <div>
+                    <h3 class='text-sm font-medium text-gray-400 uppercase tracking-wider'>Pendentes</h3>
+                    <p class='text-3xl font-bold text-white mt-1'>{{ pending_documents_count|default:"0" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Aprovados -->
+        <div class='group relative p-6 bg-[#111114]/50 border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-emerald-500/30 hover:bg-[#16161a]'>
+            <div class='absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity'>
+                <i data-lucide='check-circle' class='w-24 h-24 text-emerald-500'></i>
+            </div>
+            <div class='relative flex flex-col gap-4'>
+                <div class='w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400'>
+                    <i data-lucide='check-circle' class='w-6 h-6'></i>
+                </div>
+                <div>
+                    <h3 class='text-sm font-medium text-gray-400 uppercase tracking-wider'>Aprovados</h3>
+                    <p class='text-3xl font-bold text-white mt-1'>{{ approved_documents_count|default:"0" }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Placeholder para Atividade Recente (Extra) -->
+    <div class='bg-[#111114]/30 border border-white/5 rounded-3xl p-8 flex flex-col items-center justify-center text-center gap-4 border-dashed'>
+        <div class='w-16 h-16 bg-white/5 rounded-full flex items-center justify-center text-gray-500'>
+            <i data-lucide='activity' class='w-8 h-8'></i>
+        </div>
+        <div class='max-w-xs'>
+            <h4 class='text-lg font-semibold text-white'>Nenhuma atividade recente</h4>
+            <p class='text-gray-500 text-sm'>Comece criando uma vaga para que a IA do Crivopy possa analisar seus primeiros candidatos.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+        animation: fadeIn 0.4s ease-out forwards;
+    }
+</style>
+{% endblock %}

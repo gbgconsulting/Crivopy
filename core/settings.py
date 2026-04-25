@@ -9,9 +9,12 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -59,7 +62,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,8 +125,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Auth configuration
 AUTH_USER_MODEL = 'users.User'
@@ -137,4 +140,22 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'landing'
 
 # RAG Configuration
+# Caminho do Banco de Dados Vetorial (ChromaDB)
 CHROMA_DB_PATH = BASE_DIR / 'chroma_db'
+
+# Configuração do Provedor de LLM (Pega do .env ou usa 'openai' como padrão)
+LLM_PROVIDER = os.getenv('LLM_PROVIDER', 'openai')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
+
+AGENT_MODEL = 'gpt-4o-mini'
+AGENT_MAX_HISTORY = 10
+
+# Modelo de Embedding (Sentence Transformers)
+# Modelo multilíngue ideal para português, conforme planejado no PRD
+EMBEDDING_MODEL_NAME = 'paraphrase-multilingual-MiniLM-L12-v2'
+
+# Segurança: Limites de upload (10MB para PDFs)
+# Atualiza as configurações anteriores para o novo limite da Sprint 5B
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024 
+FILE_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE
+DATA_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE
