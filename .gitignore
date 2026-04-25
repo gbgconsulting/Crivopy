@@ -1,0 +1,40 @@
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+# Variáveis de ambiente — NUNCA subir
+.env
+.env.local
+.env.production
+
+# Banco de dados
+db.sqlite3
+
+# Arquivos de mídia enviados pelos usuários
+media/
+
+# Índice vetorial do ChromaDB
+chroma_db/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Django
+*.log
+local_settings.py
+staticfiles/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
